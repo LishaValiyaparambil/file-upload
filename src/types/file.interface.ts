@@ -15,9 +15,7 @@ export interface UploadedFile {
     thumbnailSizes?: number[];
     thumbnailFolder?: string;
   }
-  
-  export interface UploadResult {
-    url: string;
-    thumbnailUrls?: string[];
+    
+  export interface serviceOptions {
+    serviceType?:string;
   }
-  
