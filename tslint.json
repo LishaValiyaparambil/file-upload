@@ -1,0 +1,17 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "jsx-wrap-multiline": false,
+        "max-line-length": false,
+        "no-implicit-dependencies": [true, "dev"],
+        "no-var-requires": false,
+        "indent": false
+      },
+    "rulesDirectory": []
+    
+    
+}

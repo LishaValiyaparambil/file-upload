@@ -1,15 +1,16 @@
 import { uploadToS3 } from '../utils/aws.utils';
-import { UploadedFile, UploadOptions, serviceOptions } from '../types/file.interface';
+import { IUploadedFile, IUploadOptions } from '../types/file.interface';
 import { uploadToBlob } from '../utils/azure.utils'
-import sharp from 'sharp';
+import * as sharp from 'sharp';
 
 export class FileService {
-  static async uploadFile(file: UploadedFile, options?: UploadOptions, serviceType? : 'AWS'): Promise<void> {
+  static async uploadFile(file: IUploadedFile, options?: IUploadOptions, serviceType? : string): Promise<void> {
     try {
       const filename = `${Date.now()}-${file.originalname}`
 
       // Resize the image if requested
-      if (options?.resize) {
+      if (options?.resize?.height && options?.resize?.width) {
+        console.log("inside if")
         const resizedImage = await sharp(file.buffer)
           .resize(options.resize.width, options.resize.height)
           .toBuffer();
@@ -20,19 +21,18 @@ export class FileService {
           await uploadToBlob(resizedImage, `uploads/${filename}`, file.size);
         }
       } else {
+        console.log("outside if")
         if(serviceType === 'AWS'){
           await uploadToS3(file.buffer, `uploads/${filename}`, file.mimetype);
         }
         else if(serviceType === 'AZURE'){
           await uploadToBlob(file.buffer, `uploads/${filename}`, file.size);
-        }        
+        }
       }
 
-      // Generate thumbnails if requested
-      let thumbnailUrls: string[] | undefined;
-      if (options?.thumbnailSizes) {
-        let thumbnailUrls = await Promise.all(
-          options.thumbnailSizes.map(async (size) => {
+      if (options?.thumbnailSize) {
+        await Promise.all(
+          options.thumbnailSize.map(async (size) => {
             const thumbnail = await sharp(file.buffer).resize(size).toBuffer();
             const thumbnailKey = options.thumbnailFolder
               ? `${options.thumbnailFolder}/${size}-${filename}`
@@ -48,8 +48,8 @@ export class FileService {
       }
 
     } catch (err) {
-      console.error(err);
-      throw new Error('Error uploading file to S3');
+      console.log("conole.logged", err)
+      throw(err);
     }
   }
 

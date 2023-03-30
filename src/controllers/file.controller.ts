@@ -1,23 +1,25 @@
-import { Request, Response } from 'express';
-import { serviceOptions, UploadedFile } from '../types/file.interface';
+import { IUploadInputData } from '../types/file.interface';
 import { FileService } from '../services/aws.service';
 
 export class FileController {
-  static async upload(req: Request, res: Response): Promise<void> {
+  async upload(inputData : IUploadInputData): Promise<void> {
     try {
-      const file = req.file as UploadedFile;
-      let serviceType = req.body.serviceType 
+      const {
+        file,
+        serviceType = 'AWS',
+        thumbnailSize,
+        width,
+        height
+      }
+      = inputData
       const options = {
-        resize: { width: 800, height: 600 },
-        thumbnailSizes: [200, 400, 600],
-        thumbnailFolder: 'thumbnails',
-        
+        resize: { width, height },
+        thumbnailSizes: thumbnailSize,
+        thumbnailFolder: 'thumbnails'
       };
-      await FileService.uploadFile(file, options, serviceType);
-      res.status(500).send('uploading file');
+      return FileService.uploadFile(file, options, serviceType);
     } catch (err) {
-      console.error(err);
-      res.status(500).send('Error uploading file');
+      throw(err)
     }
   }
 

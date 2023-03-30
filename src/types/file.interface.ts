@@ -1,4 +1,4 @@
-export interface UploadedFile {
+export interface IUploadedFile {
     fieldname: string;
     originalname: string;
     encoding: string;
@@ -6,16 +6,20 @@ export interface UploadedFile {
     buffer: Buffer;
     size: number;
   }
-  
-  export interface UploadOptions {
-    resize?: {
-      width: number;
-      height: number;
-    };
-    thumbnailSizes?: number[];
-    thumbnailFolder?: string;
+
+  export interface IUploadInputData {
+    file: IUploadedFile;
+    width?: number;
+    height?: number;
+    thumbnailSize?: number[];
+    serviceType: string
   }
-    
-  export interface serviceOptions {
-    serviceType?:string;
+
+  export interface IUploadOptions {
+    resize?: {
+      width?: number;
+      height?: number;
+    };
+    thumbnailSize?: number[];
+    thumbnailFolder?: string;
   }
