@@ -75,18 +75,18 @@ following example demonstrate uploading a file to Azure Blob with all the parame
  
 `const FileUploader = require('cloud-file-uploader')  `  
 `const fileUploaderClient = new FileUploader();  `  
-` fileUploaderClient.uploadFileToCloud({  `  
-    `file: {  `  
-       ` originalname: 'aws_file',  `  
-        `mimetype: 'image',  `  
-        `buffer: wqeqwewqeqewe,  `  
-        `size: 12  `  
-    `},  `  
-    `thumbnailSize : [400, 600],  `  
-    `width : 200,  `  
-    `height : 400  `  
-    `serviceType: 'AZURE'  `  
-    `})  `  
+`fileUploaderClient.uploadFileToCloud({  `  
+&nbsp;`file: {  `  
+       &nbsp;&nbsp;  ` originalname: 'aws_file',  `  
+        &nbsp;&nbsp;`mimetype: 'image',  `  
+        &nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
+        &nbsp;&nbsp;`size: 12  `  
+&nbsp;`},  `  
+&nbsp;`thumbnailSize : [400, 600],  `  
+&nbsp;`width : 200,  `  
+&nbsp;`height : 400  `  
+&nbsp;`serviceType: 'AZURE'  `  
+&nbsp;`})  `  
 
 ### Without Optional Parameters
 following example demonstrate uploading a file to Amazone S3 with only the required parameters.
