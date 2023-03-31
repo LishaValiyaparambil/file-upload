@@ -77,10 +77,10 @@ following example demonstrate uploading a file to Azure Blob with all the parame
 `const fileUploaderClient = new FileUploader();  `  
 `fileUploaderClient.uploadFileToCloud({  `  
 &nbsp;&nbsp;&nbsp;`file: {  `  
-        &nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `  
-        &nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
-        &nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
-        &nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
 &nbsp;&nbsp;&nbsp;`},  `  
 &nbsp;&nbsp;&nbsp;`thumbnailSize : [400, 600],  `  
 &nbsp;&nbsp;&nbsp;`width : 200,  `  
