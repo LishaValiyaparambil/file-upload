@@ -69,15 +69,15 @@ yarn add cloud-file-uploader
 ---------------------------------------------------------
 
 ### AZURE BLOB Specefic Parameters:
----------------------------------------------------------
-| Key                     | Type   |                     |
----------------------------------------------------------
-| AZURE_ACCOUNT_NAME      | String |    Required         |
----------------------------------------------------------
-| AZURE_ACCOUNT_KEY       | String |    Required         |
----------------------------------------------------------
-| AZURE_CONTAINER_NAME    | String |    Required         |
----------------------------------------------------------
+
+| Key                   |  Type    |                     |
+|-----------------------|----------|---------------------|
+ AZURE_ACCOUNT_NAME       String     Required         
+
+ AZURE_ACCOUNT_KEY        String     Required         
+
+ AZURE_CONTAINER_NAME     String     Required         
+
 
 ## Example
 ### All parametrs
