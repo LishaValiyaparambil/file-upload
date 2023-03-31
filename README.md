@@ -73,11 +73,9 @@ yarn add cloud-file-uploader
 | Key                   |  Type    |                     |
 |-----------------------|----------|---------------------|
  AZURE_ACCOUNT_NAME     | String   | Required         
-|-----------------------|----------|---------------------|
  AZURE_ACCOUNT_KEY      |  String  |   Required         
-|-----------------------|----------|---------------------|
  AZURE_CONTAINER_NAME   |  String  |   Required         
-|-----------------------|----------|---------------------|
+
 
 ## Example
 ### All parametrs
