@@ -4,7 +4,7 @@ By cloud file uploader provides a feature to upload files to both aws and azure 
 
 # Table of Contents
 -  [Getting Started](#getting-started)
-    -[How to install](#how-to-install)
+    -  [How to install](#how-to-install)
 -  [Input Parameters](#input-parameters)
     -  [Common Parameters](#common-parameters)
         -  [File Specific Parameters](#file-specific-parameters)
