@@ -73,34 +73,34 @@ AWS_ACCESS_KEY_ID       | String |    Required         |
 ### All parametrs
 following example demonstrate uploading a file to Azure Blob with all the parametrs including optional params.
  
-`const FileUploader = require('cloud-file-uploader')  `
-`const fileUploaderClient = new FileUploader();  `
-` fileUploaderClient.uploadFileToCloud({  `
-    `file: {  `
-       ` originalname: 'aws_file',  `
-        `mimetype: 'image',  `
-        `buffer: wqeqwewqeqewe,  `
-        `size: 12  `
-    `},  `
-    `thumbnailSize : [400, 600],  `
-    `width : 200,  `
-    `height : 400  `
-    `serviceType: 'AZURE'  `
-    `})  `
+`const FileUploader = require('cloud-file-uploader')  `  
+`const fileUploaderClient = new FileUploader();  `  
+` fileUploaderClient.uploadFileToCloud({  `  
+    `file: {  `  
+       ` originalname: 'aws_file',  `  
+        `mimetype: 'image',  `  
+        `buffer: wqeqwewqeqewe,  `  
+        `size: 12  `  
+    `},  `  
+    `thumbnailSize : [400, 600],  `  
+    `width : 200,  `  
+    `height : 400  `  
+    `serviceType: 'AZURE'  `  
+    `})  `  
 
 ### Without Optional Parameters
 following example demonstrate uploading a file to Amazone S3 with only the required parameters.
  
-`const FileUploader = require('cloud-file-uploader')  `
- `const fileUploaderClient = new FileUploader();  `
- `fileUploaderClient.uploadFileToCloud({  `
-    `file: {  `
-        `originalname: 'aws_file',  `
-       ` mimetype: 'image',  `
-        `buffer: wqeqwewqeqewe,  `
-        `size: 12  `
-    `},  `
-    `})  `
+`const FileUploader = require('cloud-file-uploader')  `  
+ `const fileUploaderClient = new FileUploader();  `  
+ `fileUploaderClient.uploadFileToCloud({  `  
+    `file: {  `  
+        `originalname: 'aws_file',  `  
+       ` mimetype: 'image',  `  
+        `buffer: wqeqwewqeqewe,  `  
+        `size: 12  `  
+    `},  `  
+    `})  `  
 
 Here, thumbnailSize, width, height and serviceType are optional parameters. As for serviceType by default  
 it will take input as AWS. So if you need to use Azure you have to specify it. Credentials for using the   
