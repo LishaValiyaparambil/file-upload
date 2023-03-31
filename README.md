@@ -86,21 +86,21 @@ following example demonstrate uploading a file to Azure Blob with all the parame
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`width : 200,  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`})  `  
+`})  `  
 
 ### Without Optional Parameters
 following example demonstrate uploading a file to Amazone S3 with only the required parameters.
  
 `const FileUploader = require('cloud-file-uploader')  `  
- `const fileUploaderClient = new FileUploader();  `  
- `fileUploaderClient.uploadFileToCloud({  `  
-    `file: {  `  
-        `originalname: 'aws_file',  `  
-       ` mimetype: 'image',  `  
-        `buffer: wqeqwewqeqewe,  `  
-        `size: 12  `  
-    `},  `  
-    `})  `  
+`const fileUploaderClient = new FileUploader();  `  
+`fileUploaderClient.uploadFileToCloud({  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`originalname: 'aws_file',  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    `}  `  
+`})  `  
 
 Here, thumbnailSize, width, height and serviceType are optional parameters. As for serviceType by default  
 it will take input as AWS. So if you need to use Azure you have to specify it. Credentials for using the   
