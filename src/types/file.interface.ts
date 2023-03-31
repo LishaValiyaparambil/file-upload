@@ -10,7 +10,7 @@ export interface IUploadedFile {
     width?: number;
     height?: number;
     thumbnailSize?: number[];
-    serviceType: string
+    serviceType?: string
   }
 
   export interface IUploadOptions {
@@ -19,4 +19,5 @@ export interface IUploadedFile {
       height?: number;
     };
     thumbnailSize?: number[];
+    thumbnailFolder?: string;
   }

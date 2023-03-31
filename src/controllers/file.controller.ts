@@ -1,5 +1,5 @@
 import { IUploadInputData } from '../types/file.interface';
-import { FileService } from '../services/aws.service';
+import { FileService } from '../services/file.service';
 
 export class FileUploader {
   async uploadFileToCloud(inputData : IUploadInputData): Promise<void> {

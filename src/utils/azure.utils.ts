@@ -1,7 +1,6 @@
 import * as Azure from 'azure-storage';
 const { Readable } = require('stream');
 
-
 export const uploadToBlob = async (
   file: Buffer,
   key: string,
