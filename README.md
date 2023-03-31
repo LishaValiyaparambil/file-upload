@@ -22,11 +22,11 @@ By cloud file uploader provides a feature to upload files to both aws and azure 
 ## How to install
 The preferred way to install the Cloud-File-Uploader for Node.js is to use the npm package manager for Node.js.   Simply type the following into a terminal window:
 
-npm install cloud-file-uploader
+`npm install cloud-file-uploader`
 
 with yarn package manager
 
-yarn add cloud-file-uploader
+`yarn add cloud-file-uploader`
 
 ## Input Parameters
 
