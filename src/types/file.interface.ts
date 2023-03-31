@@ -1,7 +1,5 @@
 export interface IUploadedFile {
-    fieldname: string;
     originalname: string;
-    encoding: string;
     mimetype: string;
     buffer: Buffer;
     size: number;
@@ -21,5 +19,4 @@ export interface IUploadedFile {
       height?: number;
     };
     thumbnailSize?: number[];
-    thumbnailFolder?: string;
   }

@@ -1,5 +1,0 @@
-## Intorduction
-
-This module provide a feature to upload file to an AWS S3 bucket or to Azure blob store. In addition to that resizing the files and creating thumbnails with uploading thumbnails to Cloud storage is implmented here.
-
-## Working

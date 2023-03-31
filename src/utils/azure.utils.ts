@@ -8,13 +8,13 @@ export const uploadToBlob = async (
   contentType: number
 ): Promise<string> => {
   const blobService = Azure.createBlobService(
-    `${process.env.accountName}`,
-    `${process.env.accountKey}`,
+    `${process.env.AZURE_ACCOUNT_NAME}`,
+    `${process.env.AZURE_ACCOUNT_KEY}`,
   );
 
     const result = await new Promise<void>((resolve, reject) => {
         blobService.createBlockBlobFromStream(
-            process.env.containerName!,
+            process.env.AZURE_CONTAINER_NAME!,
             key,
             Readable.from(file),
             contentType,
