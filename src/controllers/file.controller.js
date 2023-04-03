@@ -43,21 +43,24 @@ var FileUploader = /** @class */ (function () {
     }
     FileUploader.prototype.uploadFileToCloud = function (inputData) {
         return __awaiter(this, void 0, void 0, function () {
-            var file, _a, serviceType, thumbnailSize, width, height, options;
+            var file, _a, serviceType, thumbnailSize, width, height, options, err_1;
             return __generator(this, function (_b) {
-                try {
-                    file = inputData.file, _a = inputData.serviceType, serviceType = _a === void 0 ? 'AWS' : _a, thumbnailSize = inputData.thumbnailSize, width = inputData.width, height = inputData.height;
-                    options = {
-                        resize: { width: width, height: height },
-                        thumbnailSizes: thumbnailSize,
-                        thumbnailFolder: 'thumbnails'
-                    };
-                    return [2 /*return*/, file_service_1.FileService.uploadFile(file, options, serviceType)];
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        file = inputData.file, _a = inputData.serviceType, serviceType = _a === void 0 ? 'AWS' : _a, thumbnailSize = inputData.thumbnailSize, width = inputData.width, height = inputData.height;
+                        options = {
+                            resize: { width: width, height: height },
+                            thumbnailSize: thumbnailSize,
+                            thumbnailFolder: 'thumbnails'
+                        };
+                        return [4 /*yield*/, file_service_1.FileService.uploadFile(file, options, serviceType)];
+                    case 1: return [2 /*return*/, _b.sent()];
+                    case 2:
+                        err_1 = _b.sent();
+                        throw (err_1);
+                    case 3: return [2 /*return*/];
                 }
-                catch (err) {
-                    throw (err);
-                }
-                return [2 /*return*/];
             });
         });
     };

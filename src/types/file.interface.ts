@@ -1,6 +1,6 @@
 export interface IUploadedFile {
-    originalname: string;
-    mimetype: string;
+  originalName: string;
+    mimeType: string;
     buffer: Buffer;
     size: number;
   }
@@ -20,4 +20,12 @@ export interface IUploadedFile {
     };
     thumbnailSize?: number[];
     thumbnailFolder?: string;
+  }
+
+  export interface IResultData{
+    resizedFlePath? : string;
+    flePath? : string;
+    thumbnailFilePath? : any;
+
+
   }

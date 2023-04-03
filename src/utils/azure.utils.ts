@@ -6,6 +6,7 @@ export const uploadToBlob = async (
   key: string,
   contentType: number
 ): Promise<string> => {
+  try {
   const blobService = Azure.createBlobService(
     `${process.env.AZURE_ACCOUNT_NAME}`,
     `${process.env.AZURE_ACCOUNT_KEY}`,
@@ -29,7 +30,10 @@ export const uploadToBlob = async (
       });
     const fileUrl = `https://${process.env.accountName}.blob.core.windows.net/${process.env.containerName}/${key}`
 return fileUrl;
-
+}
+catch(error){
+  throw error
+}
 };
 
 

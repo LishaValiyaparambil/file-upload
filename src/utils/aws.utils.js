@@ -38,26 +38,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadToS3 = void 0;
 var aws_sdk_1 = require("aws-sdk");
-var s3 = new aws_sdk_1.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
 var uploadToS3 = function (file, key, contentType) { return __awaiter(void 0, void 0, void 0, function () {
-    var result;
+    var s3, result, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, s3
-                    .upload({
-                    Bucket: "".concat(process.env.AWS_S3_BUCKET_NAME),
-                    Key: key,
-                    Body: file,
-                    ContentType: contentType,
-                    ACL: 'public-read',
-                })
-                    .promise()];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                s3 = new aws_sdk_1.S3({
+                    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+                });
+                return [4 /*yield*/, s3
+                        .upload({
+                        Bucket: "".concat(process.env.AWS_S3_BUCKET_NAME),
+                        Key: key,
+                        Body: file,
+                        ContentType: contentType,
+                        ACL: 'public-read',
+                    })
+                        .promise()];
             case 1:
                 result = _a.sent();
                 return [2 /*return*/, result.Location];
+            case 2:
+                error_1 = _a.sent();
+                throw error_1;
+            case 3: return [2 /*return*/];
         }
     });
 }); };

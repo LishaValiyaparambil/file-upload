@@ -46,44 +46,50 @@ var FileService = /** @class */ (function () {
     FileService.uploadFile = function (file, options, serviceType) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var filename_1, resizedImage, err_1;
+            var fileName_1, filePathList, resizedFlePath, flePath, thumbnailFilePath, resizedFile, resizedFlePath_1, resizedFlePath_2, flePath_1, flePath_2, thumbnailFilePath_1, err_1;
             var _this = this;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 13, , 14]);
-                        filename_1 = "".concat(Date.now(), "-").concat(file.originalname);
+                        fileName_1 = "".concat(Date.now(), "-").concat(file.originalName);
+                        filePathList = {};
+                        resizedFlePath = 'test';
+                        flePath = 'test 2';
+                        thumbnailFilePath = 'test 3';
                         if (!(((_a = options === null || options === void 0 ? void 0 : options.resize) === null || _a === void 0 ? void 0 : _a.height) && ((_b = options === null || options === void 0 ? void 0 : options.resize) === null || _b === void 0 ? void 0 : _b.width))) return [3 /*break*/, 6];
-                        console.log("inside if");
                         return [4 /*yield*/, sharp(file.buffer)
                                 .resize(options.resize.width, options.resize.height)
                                 .toBuffer()];
                     case 1:
-                        resizedImage = _c.sent();
+                        resizedFile = _c.sent();
                         if (!(serviceType === 'AWS')) return [3 /*break*/, 3];
-                        return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(resizedImage, "uploads/".concat(filename_1), file.mimetype)];
+                        return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(resizedFile, "uploads/".concat(fileName_1), file.mimeType)];
                     case 2:
-                        _c.sent();
+                        resizedFlePath_1 = _c.sent();
+                        filePathList.resizedFlePath = resizedFlePath_1;
                         return [3 /*break*/, 5];
                     case 3:
                         if (!(serviceType === 'AZURE')) return [3 /*break*/, 5];
-                        return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(resizedImage, "uploads/".concat(filename_1), file.size)];
+                        return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(resizedFile, "uploads/".concat(fileName_1), file.size)];
                     case 4:
-                        _c.sent();
+                        resizedFlePath_2 = _c.sent();
+                        filePathList.resizedFlePath = resizedFlePath_2;
                         _c.label = 5;
                     case 5: return [3 /*break*/, 10];
                     case 6:
-                        console.log("outside if");
                         if (!(serviceType === 'AWS')) return [3 /*break*/, 8];
-                        return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(file.buffer, "uploads/".concat(filename_1), file.mimetype)];
+                        return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(file.buffer, "uploads/".concat(fileName_1), file.mimeType)];
                     case 7:
-                        _c.sent();
+                        flePath_1 = _c.sent();
+                        filePathList.flePath = flePath_1;
                         return [3 /*break*/, 10];
                     case 8:
                         if (!(serviceType === 'AZURE')) return [3 /*break*/, 10];
-                        return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(file.buffer, "uploads/".concat(filename_1), file.size)];
+                        return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(file.buffer, "uploads/".concat(fileName_1), file.size)];
                     case 9:
-                        _c.sent();
+                        flePath_2 = _c.sent();
+                        filePathList.flePath = flePath_2;
                         _c.label = 10;
                     case 10:
                         if (!(options === null || options === void 0 ? void 0 : options.thumbnailSize)) return [3 /*break*/, 12];
@@ -95,10 +101,10 @@ var FileService = /** @class */ (function () {
                                         case 1:
                                             thumbnail = _a.sent();
                                             thumbnailKey = options.thumbnailFolder
-                                                ? "".concat(options.thumbnailFolder, "/").concat(size, "-").concat(filename_1)
-                                                : "uploads/".concat(size, "-").concat(filename_1);
+                                                ? "".concat(options.thumbnailFolder, "/").concat(size, "-").concat(fileName_1)
+                                                : "uploads/".concat(size, "-").concat(fileName_1);
                                             if (serviceType === 'AWS') {
-                                                return [2 /*return*/, (0, aws_utils_1.uploadToS3)(thumbnail, thumbnailKey, file.mimetype)];
+                                                return [2 /*return*/, (0, aws_utils_1.uploadToS3)(thumbnail, thumbnailKey, file.mimeType)];
                                             }
                                             else if (serviceType === 'AZURE') {
                                                 return [2 /*return*/, (0, azure_utils_1.uploadToBlob)(thumbnail, thumbnailKey, file.size)];
@@ -108,12 +114,12 @@ var FileService = /** @class */ (function () {
                                 });
                             }); }))];
                     case 11:
-                        _c.sent();
+                        thumbnailFilePath_1 = _c.sent();
+                        filePathList.thumbnailFilePath = thumbnailFilePath_1;
                         _c.label = 12;
-                    case 12: return [3 /*break*/, 14];
+                    case 12: return [2 /*return*/, filePathList];
                     case 13:
                         err_1 = _c.sent();
-                        console.log("conole.logged", err_1);
                         throw (err_1);
                     case 14: return [2 /*return*/];
                 }

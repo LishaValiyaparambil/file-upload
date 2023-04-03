@@ -1,54 +1,60 @@
 import { uploadToS3 } from '../utils/aws.utils';
-import { IUploadedFile, IUploadOptions } from '../types/file.interface';
+import { IUploadedFile, IUploadOptions, IResultData } from '../types/file.interface';
 import { uploadToBlob } from '../utils/azure.utils'
 import * as sharp from 'sharp';
 
 export class FileService {
-  static async uploadFile(file: IUploadedFile, options?: IUploadOptions, serviceType? : string): Promise<void> {
+  static async uploadFile(file: IUploadedFile, options?: IUploadOptions, serviceType? : string) {
     try {
-      const filename = `${Date.now()}-${file.originalname}`
-
-      // Resize the image if requested
+      const fileName = `${Date.now()}-${file.originalName}`
+      const filePathList : IResultData = {}
+      let resizedFlePath = 'test'
+      let flePath = 'test 2'
+      let thumbnailFilePath = 'test 3'
+      
       if (options?.resize?.height && options?.resize?.width) {
-        console.log("inside if")
-        const resizedImage = await sharp(file.buffer)
+        const resizedFile = await sharp(file.buffer)
           .resize(options.resize.width, options.resize.height)
           .toBuffer();
         if(serviceType === 'AWS'){
-          await uploadToS3(resizedImage, `uploads/${filename}`, file.mimetype);
+          let resizedFlePath = await uploadToS3(resizedFile, `uploads/${fileName}`, file.mimeType);
+          filePathList.resizedFlePath = resizedFlePath;
         }
         else if(serviceType === 'AZURE'){
-          await uploadToBlob(resizedImage, `uploads/${filename}`, file.size);
+          let resizedFlePath = await uploadToBlob(resizedFile, `uploads/${fileName}`, file.size);
+          filePathList.resizedFlePath = resizedFlePath;
         }
       } else {
-        console.log("outside if")
         if(serviceType === 'AWS'){
-          await uploadToS3(file.buffer, `uploads/${filename}`, file.mimetype);
+          let flePath = await uploadToS3(file.buffer, `uploads/${fileName}`, file.mimeType);
+          filePathList.flePath = flePath;
         }
         else if(serviceType === 'AZURE'){
-          await uploadToBlob(file.buffer, `uploads/${filename}`, file.size);
+          let flePath = await uploadToBlob(file.buffer, `uploads/${fileName}`, file.size);
+          filePathList.flePath = flePath;
         }
       }
 
       if (options?.thumbnailSize) {
-        await Promise.all(
+        let thumbnailFilePath = await Promise.all(
           options.thumbnailSize.map(async (size) => {
             const thumbnail = await sharp(file.buffer).resize(size).toBuffer();
             const thumbnailKey = options.thumbnailFolder
-              ? `${options.thumbnailFolder}/${size}-${filename}`
-              : `uploads/${size}-${filename}`;
+              ? `${options.thumbnailFolder}/${size}-${fileName}`
+              : `uploads/${size}-${fileName}`;
               if(serviceType === 'AWS'){
-                return uploadToS3(thumbnail, thumbnailKey, file.mimetype);
+                return uploadToS3(thumbnail, thumbnailKey, file.mimeType);
               }
               else if(serviceType === 'AZURE'){
                 return uploadToBlob(thumbnail, thumbnailKey, file.size);
               }
           })
         );
+        filePathList.thumbnailFilePath = thumbnailFilePath;
       }
+      return filePathList;
 
     } catch (err) {
-      console.log("conole.logged", err)
       throw(err);
     }
   }

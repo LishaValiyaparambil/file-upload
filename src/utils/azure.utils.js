@@ -40,13 +40,14 @@ exports.uploadToBlob = void 0;
 var Azure = require("azure-storage");
 var Readable = require('stream').Readable;
 var uploadToBlob = function (file, key, contentType) { return __awaiter(void 0, void 0, void 0, function () {
-    var blobService, result, fileUrl;
+    var blobService_1, result, fileUrl, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                blobService = Azure.createBlobService("".concat(process.env.AZURE_ACCOUNT_NAME), "".concat(process.env.AZURE_ACCOUNT_KEY));
+                _a.trys.push([0, 2, , 3]);
+                blobService_1 = Azure.createBlobService("".concat(process.env.AZURE_ACCOUNT_NAME), "".concat(process.env.AZURE_ACCOUNT_KEY));
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
-                        blobService.createBlockBlobFromStream(process.env.AZURE_CONTAINER_NAME, key, Readable.from(file), contentType, {}, function (error) {
+                        blobService_1.createBlockBlobFromStream(process.env.AZURE_CONTAINER_NAME, key, Readable.from(file), contentType, {}, function (error) {
                             if (error) {
                                 reject(error);
                             }
@@ -59,6 +60,10 @@ var uploadToBlob = function (file, key, contentType) { return __awaiter(void 0, 
                 result = _a.sent();
                 fileUrl = "https://".concat(process.env.accountName, ".blob.core.windows.net/").concat(process.env.containerName, "/").concat(key);
                 return [2 /*return*/, fileUrl];
+            case 2:
+                error_1 = _a.sent();
+                throw error_1;
+            case 3: return [2 /*return*/];
         }
     });
 }); };
