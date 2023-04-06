@@ -1,19 +1,21 @@
 import { S3 } from 'aws-sdk';
-
-
+import { IConfig } from '../types/file.interface';
 export const uploadToS3 = async (
   file: Buffer,
   key: string,
-  contentType: string
+  contentType: string,
+  config: IConfig
 ): Promise<string> => {
   try {
+    // Initializing the Amazon s3 variable
     const s3 = new S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: config?.account,
+      secretAccessKey: config?.secret,
     });
+    // Uploading file to the s3 bucket
     const result = await s3
       .upload({
-        Bucket: `${process.env.AWS_S3_BUCKET_NAME}`,
+        Bucket: `${config?.location}`,
         Key: key,
         Body: file,
         ContentType: contentType,

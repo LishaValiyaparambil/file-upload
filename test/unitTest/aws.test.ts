@@ -107,5 +107,21 @@ describe('FileUploader', () => {
             }
         );
     });
+    it('file upload to cloud with invalid service provider', async () => {
+        const error = await fileUploader.uploadFileToCloud({
+            file: {
+                originalName: 'string',
+                mimeType: 'image',
+                buffer: new Buffer('test'),
+                size: 23
+            },
+            serviceType: 'GCP'
+        });
+        expect(error).toStrictEqual(
+            {
+                error : 'Invalid service'
+            }
+        );
+    });
 
 });

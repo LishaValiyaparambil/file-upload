@@ -10,7 +10,9 @@ export interface IUploadedFile {
     width?: number;
     height?: number;
     thumbnailSize?: number[];
-    serviceType?: string
+    serviceType?: string;
+    s3Config ? : {[key: string]: string};
+    blobConfig? : {[key: string]: string}
   }
 
   export interface IUploadOptions {
@@ -26,6 +28,23 @@ export interface IUploadedFile {
     resizedFlePath? : string;
     flePath? : string;
     thumbnailFilePath? : any;
+  }
 
+  export interface IServiceConfigData{
+    s3Config ? :{
+      accessKeyId : string;
+      secretAccessKey : string;
+      bucketName : string;
+    }
+    blobConfig ? :{
+      accountName : string;
+      accountKey : string;
+      containerName : string;
+    }
+  }
 
+  export interface IConfig {
+      account : string;
+      secret : string;
+      location : string;
   }
