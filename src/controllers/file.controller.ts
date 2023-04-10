@@ -40,7 +40,6 @@ export class FileUploader {
             location: blobConfig.containerName
         }
         }
-        
       }
       // calling the file upload function for both AWS and Azure
       return await FileService.uploadFile(file, options, serviceType, config);

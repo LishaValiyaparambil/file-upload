@@ -9,7 +9,12 @@ describe('FileUploader', () => {
                 originalName: 'string',
                 mimeType: 'image',
                 buffer: new Buffer('test'),
-                size: 23
+                size: 23,
+            },
+            s3Config : {
+                accessKeyId : '',
+                secretAccessKey : '',
+                bucketName : ''
             }
         });
         expect(result).toStrictEqual(
@@ -25,6 +30,11 @@ describe('FileUploader', () => {
                 mimeType: 'image',
                 buffer: new Buffer('test'),
                 size: 23
+            },
+            s3Config : {
+                accessKeyId : '',
+                secretAccessKey : '',
+                bucketName : ''
             },
             width: 23,
             height: 33
@@ -44,6 +54,11 @@ describe('FileUploader', () => {
                 size: 23
             },
             thumbnailSize: [200, 400],
+            s3Config : {
+                accessKeyId : '',
+                secretAccessKey : '',
+                bucketName : ''
+            }
         });
         expect(result).toStrictEqual(
             {
@@ -62,7 +77,12 @@ describe('FileUploader', () => {
                     buffer: new Buffer('test'),
                     size: 23
                 },
-                serviceType: 'AZURE'
+                serviceType: 'AZURE',
+                blobConfig : {
+                    accountName : '',
+                    accountKey : '',
+                    containerName : ''
+                }
             }
         );
         expect(result).toStrictEqual(
@@ -81,7 +101,12 @@ describe('FileUploader', () => {
             },
             width: 23,
             height: 33,
-            serviceType: 'AZURE'
+            serviceType: 'AZURE',
+            blobConfig : {
+                accountName : '',
+                accountKey : '',
+                containerName : ''
+            }
         });
         expect(result).toStrictEqual(
             {
@@ -98,7 +123,12 @@ describe('FileUploader', () => {
                 size: 23
             },
             thumbnailSize: [200, 400],
-            serviceType: 'AZURE'
+            serviceType: 'AZURE',
+            blobConfig : {
+                accountName : '',
+                accountKey : '',
+                containerName : ''
+            }
         });
         expect(result).toStrictEqual(
             {
@@ -115,7 +145,12 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23
             },
-            serviceType: 'GCP'
+            serviceType: 'GCP',
+            blobConfig : {
+                accountName : '',
+                accountKey : '',
+                containerName : ''
+            }
         });
         expect(error).toStrictEqual(
             {

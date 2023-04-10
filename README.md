@@ -43,8 +43,8 @@ with yarn package manager
 
 ### File Specific Parameters:
 
-| Key             |   Type      |                |             Description                           |       
-------------------|-------------|----------------|---------------------------------------------------|
+| Key             |   Type      |                |             Description                          |       
+------------------|-------------|----------------|--------------------------------------------------|
  originalname    |   String    |    Required    |     Name of the file which is being uploaded      |
  mimetype        |   String    |    Required    |     Type of the file we are using                 |
  buffer          |   Buffer    |    Required    |     Buffer details of the uploading file          |
@@ -53,20 +53,20 @@ with yarn package manager
 
 ### AWS S3 Specific Parameters:
 
-| Key                   | Type   |                     |
-|-----------------------|--------|---------------------|
-AWS_S3_BUCKET_NAME      | String |    Required         |
-AWS_SECRET_ACCESS_KEY   | String |    Required         |
-AWS_ACCESS_KEY_ID       | String |    Required         |
+| Key             | Type   |                   |
+|-----------------|--------|-------------------|
+accessKeyId       | String |    Required       |
+secretAccessKey   | String |    Required       |
+accessKeyId       | String |    Required       |
 
 
 ### AZURE BLOB Specific Parameters:
 
-| Key                   |  Type    |                     |
-|-----------------------|----------|---------------------|
- AZURE_ACCOUNT_NAME     | String   | Required         
- AZURE_ACCOUNT_KEY      |  String  |   Required         
- AZURE_CONTAINER_NAME   |  String  |   Required         
+| Key                       |  Type          |
+|---------------------------|----------------|
+ accountName     | String   |   Required     |  
+ accountKey      |  String  |   Req uired    |   
+ containerName   |  String  |   Required     |    
 
 
 ## Example
@@ -103,8 +103,7 @@ The following example demonstrates  uploading a file to Amazon S3 with only the 
 `})  `  
 
 Here, thumbnailSize, width, height and serviceType are optional parameters. As for serviceType by default  
-it will take input as AWS. So if you need to use Azure you have to specify it. Credentials for using the   
-cloud provider must be specified in the .env file with respect to the parameter values specified above.
+it will take input as AWS. So if you need to use Azure you have to specify it.
 
 ## Author
 lisha.vl@perfomatix.com
