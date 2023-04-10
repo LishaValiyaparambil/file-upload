@@ -86,6 +86,11 @@ The following example demonstrates uploading a file to Azure Blob with all the p
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`width : 200,  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blobConfig : {  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountName  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountKey  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`containerName  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  ` 
 `})  `  
 
 ### Without Optional Parameters
@@ -99,8 +104,14 @@ The following example demonstrates  uploading a file to Amazon S3 with only the 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    `}  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    `}  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`s3Config : {  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accessKeyId  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretAccessKey  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`bucketName  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `  
 `})  `  
+
 
 Here, thumbnailSize, width, height and serviceType are optional parameters. As for serviceType by default  
 it will take input as AWS. So if you need to use Azure you have to specify it.
