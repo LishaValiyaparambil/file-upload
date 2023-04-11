@@ -11,8 +11,7 @@ export interface IUploadedFile {
     height?: number;
     thumbnailSize?: number[];
     serviceType?: string;
-    s3Config ? : {[key: string]: string};
-    blobConfig? : {[key: string]: string}
+    cloudConfig  : IServiceConfigData;
   }
 
   export interface IUploadOptions {
@@ -31,20 +30,11 @@ export interface IUploadedFile {
   }
 
   export interface IServiceConfigData{
-    s3Config ? :{
-      accessKeyId : string;
-      secretAccessKey : string;
-      bucketName : string;
-    }
-    blobConfig ? :{
-      accountName : string;
-      accountKey : string;
-      containerName : string;
+    cloudConfig :{
+      KeyId : string;
+      secretKey : string;
+      storageLocation : string;
     }
   }
 
-  export interface IConfig {
-      account : string;
-      secret : string;
-      location : string;
-  }
+

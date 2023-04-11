@@ -1,11 +1,11 @@
 import { uploadToS3 } from '../utils/aws.utils';
-import { IUploadedFile, IUploadOptions, IResultData, IConfig } from '../types/file.interface';
+import { IUploadedFile, IUploadOptions, IResultData, IServiceConfigData } from '../types/file.interface';
 import { uploadToBlob } from '../utils/azure.utils'
 import * as sharp from 'sharp';
 
 // Function for file upload along with resizing and thumbnail creation
 export class FileService {
-  static async uploadFile(file: IUploadedFile, options?: IUploadOptions, serviceType?: string, config?: IConfig) {
+  static async uploadFile(file: IUploadedFile, options?: IUploadOptions, serviceType?: string, config?: IServiceConfigData) {
     try {
       const fileName = `${Date.now()}-${file.originalName}`
       const filePathList: IResultData = {}

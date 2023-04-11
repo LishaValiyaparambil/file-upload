@@ -1,23 +1,23 @@
 import * as Azure from 'azure-storage';
 const { Readable } = require('stream');
-import { IConfig } from '../types/file.interface';
+import { IServiceConfigData } from '../types/file.interface';
 
 export const uploadToBlob = async (
   file: Buffer,
   key: string,
   contentType: number,
-  config: IConfig
+  config: IServiceConfigData
 ): Promise<string> => {
   try {
     // Initializing the Azure Blob variable
     const blobService = Azure.createBlobService(
-      config.account,
-      config.secret
+      config.cloudConfig.KeyId,
+      config.cloudConfig.secretKey
     );
     // Uploading file to the Azure blob    accountName? : string;
     const result = await new Promise<void>((resolve, reject) => {
       blobService.createBlockBlobFromStream(
-       config.location,
+       config.cloudConfig.storageLocation,
         key,
         Readable.from(file),
         contentType,
