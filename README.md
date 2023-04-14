@@ -8,8 +8,7 @@ By cloud file uploader provides a feature to upload files to both aws and azure 
 -  [Input Parameters](#input-parameters)
     -  [Common Parameters](#common-parameters)
         -  [File Specific Parameters](#file-specific-parameters)
-    -  [Aws S3 Specific Parameters](#aws-s3-specific-parameters)
-    -  [Azure Blob Specific Parameters](#azure-blob-specific-parameters)
+    -  [Cloud Service Specific Parameters](#cloud-service-specefic-parameters)
 -  [Example](#example)
     -  [All Parameters](#all-parameters)
     -  [Without Optional Parameters](#without-optional-parameters)
@@ -51,22 +50,14 @@ with yarn package manager
  size            |   Number    |    Required    |     Size of the file                              |
 
 
-### AWS S3 Specific Parameters:
+### Cloud Service Specific Parameters:
 
-| Key             | Type   |                   |
-|-----------------|--------|-------------------|
-accessKeyId       | String |    Required       |
-secretAccessKey   | String |    Required       |
-accessKeyId       | String |    Required       |
+| Key             | Type   |                   |             Description
+|-----------------|--------|-------------------|--------------------------------------------------------|
+KeyId             | String |    Required       | accessKeyId of the s3 or accountName of azure blob     |
+secretKey         | String |    Required       | secretAccessKey of the s3 or accountKey of azure blob  |
+storageLocation   | String |    Required       | bucketName of the s3 or containerName of azure blob    |
 
-
-### AZURE BLOB Specific Parameters:
-
-| Key                       |  Type          |
-|---------------------------|----------------|
- accountName     | String   |   Required     |  
- accountKey      |  String  |   Req uired    |   
- containerName   |  String  |   Required     |    
 
 
 ## Example
@@ -86,10 +77,10 @@ The following example demonstrates uploading a file to Azure Blob with all the p
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`width : 200,  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blobConfig : {  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountName  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountKey  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`containerName  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cloudConfig : {  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation  ` 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  ` 
 `})  `  
 
@@ -105,10 +96,10 @@ The following example demonstrates  uploading a file to Amazon S3 with only the 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    `}  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`s3Config : {  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accessKeyId  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretAccessKey  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`bucketName  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cloudConfig : {  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey  ` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation  ` 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `  
 `})  `  
 

@@ -11,13 +11,13 @@ export const uploadToBlob = async (
   try {
     // Initializing the Azure Blob variable
     const blobService = Azure.createBlobService(
-      config.cloudConfig.KeyId,
-      config.cloudConfig.secretKey
+      config.KeyId,
+      config.secretKey
     );
     // Uploading file to the Azure blob    accountName? : string;
     const result = await new Promise<void>((resolve, reject) => {
       blobService.createBlockBlobFromStream(
-       config.cloudConfig.storageLocation,
+       config.storageLocation,
         key,
         Readable.from(file),
         contentType,

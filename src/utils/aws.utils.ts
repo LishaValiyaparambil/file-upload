@@ -9,13 +9,13 @@ export const uploadToS3 = async (
   try {
     // Initializing the Amazon s3 variable
     const s3 = new S3({
-      accessKeyId: config?.cloudConfig.KeyId,
-      secretAccessKey: config?.cloudConfig.secretKey,
+      accessKeyId: config.KeyId,
+      secretAccessKey: config.secretKey,
     });
     // Uploading file to the s3 bucket
     const result = await s3
       .upload({
-        Bucket: `${config?.cloudConfig.storageLocation}`,
+        Bucket: `${config.storageLocation}`,
         Key: key,
         Body: file,
         ContentType: contentType,

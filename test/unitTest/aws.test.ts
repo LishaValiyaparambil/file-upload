@@ -11,10 +11,10 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23,
             },
-            s3Config : {
-                accessKeyId : '',
-                secretAccessKey : '',
-                bucketName : ''
+            cloudConfig: {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             }
         });
         expect(result).toStrictEqual(
@@ -31,10 +31,10 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23
             },
-            s3Config : {
-                accessKeyId : '',
-                secretAccessKey : '',
-                bucketName : ''
+            cloudConfig : {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             },
             width: 23,
             height: 33
@@ -54,10 +54,10 @@ describe('FileUploader', () => {
                 size: 23
             },
             thumbnailSize: [200, 400],
-            s3Config : {
-                accessKeyId : '',
-                secretAccessKey : '',
-                bucketName : ''
+            cloudConfig : {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             }
         });
         expect(result).toStrictEqual(
@@ -78,10 +78,10 @@ describe('FileUploader', () => {
                     size: 23
                 },
                 serviceType: 'AZURE',
-                blobConfig : {
-                    accountName : '',
-                    accountKey : '',
-                    containerName : ''
+                cloudConfig : {
+                    KeyId : 'account key',
+                    secretKey : 'secret key',
+                    storageLocation : 'location of the bucket'
                 }
             }
         );
@@ -102,10 +102,10 @@ describe('FileUploader', () => {
             width: 23,
             height: 33,
             serviceType: 'AZURE',
-            blobConfig : {
-                accountName : '',
-                accountKey : '',
-                containerName : ''
+            cloudConfig : {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             }
         });
         expect(result).toStrictEqual(
@@ -124,10 +124,10 @@ describe('FileUploader', () => {
             },
             thumbnailSize: [200, 400],
             serviceType: 'AZURE',
-            blobConfig : {
-                accountName : '',
-                accountKey : '',
-                containerName : ''
+            cloudConfig : {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             }
         });
         expect(result).toStrictEqual(
@@ -146,10 +146,10 @@ describe('FileUploader', () => {
                 size: 23
             },
             serviceType: 'GCP',
-            blobConfig : {
-                accountName : '',
-                accountKey : '',
-                containerName : ''
+            cloudConfig : {
+                KeyId : 'account key',
+                secretKey : 'secret key',
+                storageLocation : 'location of the bucket'
             }
         });
         expect(error).toStrictEqual(

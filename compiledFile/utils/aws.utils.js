@@ -6,13 +6,13 @@ const uploadToS3 = async (file, key, contentType, config) => {
     try {
         // Initializing the Amazon s3 variable
         const s3 = new aws_sdk_1.S3({
-            accessKeyId: config === null || config === void 0 ? void 0 : config.account,
-            secretAccessKey: config === null || config === void 0 ? void 0 : config.secret,
+            accessKeyId: config.KeyId,
+            secretAccessKey: config.secretKey,
         });
         // Uploading file to the s3 bucket
         const result = await s3
             .upload({
-            Bucket: `${config === null || config === void 0 ? void 0 : config.location}`,
+            Bucket: `${config.storageLocation}`,
             Key: key,
             Body: file,
             ContentType: contentType,

@@ -22,7 +22,7 @@ export class FileUploader {
       };
 
       // calling the file upload function for both AWS and Azure
-      return await FileService.uploadFile(file, options, serviceType, cloudConfig);
+      return await FileService.uploadFile(file, cloudConfig, options, serviceType);
     } catch (err) {
       throw (err)
     }
