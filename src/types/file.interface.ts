@@ -34,4 +34,10 @@ export interface IServiceConfigData {
     storageLocation: string;
 }
 
+export interface IFileUploadData {
+    file: IUploadedFile,
+    config: IServiceConfigData,
+    options?: IUploadOptions,
+    serviceType? : string
+}
 

@@ -1,31 +1,42 @@
-import { IUploadInputData } from '../types/file.interface';
-import { FileService } from '../services/file.service';
+import { IFileUploadData, IResultData } from '../types/file.interface';
+import { AzureService, AWSService } from '../services'
 
-//Method which calls the file upload function
-export class FileUploader {
-  async uploadFileToCloud(inputData: IUploadInputData) {
-    try {
-      // Input data from the user
-      const {
-        file,
-        serviceType = 'AWS',
-        thumbnailSize,
-        width,
-        height,
-        cloudConfig
-      }
-        = inputData
-      const options = {
-        resize: { width, height },
-        thumbnailSize: thumbnailSize,
-        thumbnailFolder: 'thumbnails'
-      };
-
-      // calling the file upload function for both AWS and Azure
-      return await FileService.uploadFile(file, cloudConfig, options, serviceType);
-    } catch (err) {
-      throw (err)
-    }
-  }
-
+interface FileUploadMethod {
+  uploadToCloud(): Promise<IResultData>
 }
+
+export class UploadStrategy {
+  strategy: FileUploadMethod
+  constructor(strategy: FileUploadMethod) {
+    this.strategy = strategy
+  }
+  async uploadToCloud(): Promise<IResultData> {
+    return this.strategy.uploadToCloud()
+  }
+}
+
+export class AWSUploader implements FileUploadMethod {
+  uploadObject: IFileUploadData
+  awsObject = new AWSService()
+  constructor(uploadObject: IFileUploadData) {
+    this.uploadObject = uploadObject
+  }
+  async uploadToCloud(): Promise<IResultData> {
+    const result = await this.awsObject.s3UploadFunction(this.uploadObject)
+    return result
+  }
+}
+
+export class AzureUploader implements FileUploadMethod {
+  uploadObject: IFileUploadData
+  azureObject = new AzureService()
+  constructor(uploadObject: IFileUploadData) {
+    this.uploadObject = uploadObject
+  }
+  async uploadToCloud(): Promise<IResultData> {
+    const result = await this.azureObject.azureUploadFunction(this.uploadObject)
+    return result
+  }
+}
+
+export { AWSService };

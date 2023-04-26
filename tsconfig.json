@@ -2,7 +2,7 @@
     "compilerOptions": {
       "target": "ES2019",
       "module": "CommonJS",
-      "outDir": "compiledFile",
+      "outDir": "dist",
       "strict": true,
       "esModuleInterop": false,
       "allowSyntheticDefaultImports": true
