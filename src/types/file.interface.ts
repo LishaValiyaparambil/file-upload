@@ -16,11 +16,13 @@ export interface IUploadInputData {
 
 export interface IUploadOptions {
   resize?: {
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
   };
-  thumbnailSize?: number[];
-  thumbnailFolder?: string;
+  thumbnail?: {
+  thumbnailSize: number[];
+  thumbnailFolder: string;
+  }
 }
 
 export interface IResultData {

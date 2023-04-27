@@ -18,7 +18,7 @@ export default class AzureService {
         iFileUploadData.file.size,
         iFileUploadData.config)
 
-    const thumbnailBlobPath = iFileUploadData.options?.thumbnailSize ? await createThumbnail(iFileUploadData.file,
+    const thumbnailBlobPath = iFileUploadData.options?.thumbnail?.thumbnailSize ? await createThumbnail(iFileUploadData.file,
       iFileUploadData.options,
       iFileUploadData.config,
       fileName,

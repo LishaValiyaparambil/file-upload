@@ -8,6 +8,10 @@ By cloud file uploader provides a feature to upload files to both aws and azure 
 -  [Input Parameters](#input-parameters)
     -  [Common Parameters](#common-parameters)
         -  [File Specific Parameters](#file-specific-parameters)
+        -  [Config Specific Parameters](#config-specific-parameters)
+        -  [Options Specific Parameters](#options-specific-parameters)
+            -  [Resize Specific Parameters](#resize-specific-parameters)
+            -  [Thumbnail Specific Parameters](#thumbnail-specific-parameters)
     -  [Cloud Service Specific Parameters](#cloud-service-specefic-parameters)
 -  [Example](#example)
     -  [All Parameters](#all-parameters)
@@ -33,11 +37,10 @@ with yarn package manager
 
 | Key             |   Type      |                |      Default   |               Description                   |       
 ------------------|-------------|----------------|----------------|---------------------------------------------|
- file            |   Object    |    Required    |                | Details of the file which is being uploaded |
- serviceType     |   String    |    Optional    |      AWS       | Specify the cloud provider Azure/Aws        |
- thumbnailSize   |   Array     |    Optional    |      []        | Size of the thumbnails if needed            |
- height          |   Number    |    Optional    |                | Height of the file if needs resizing        |
- width           |   Number    |    Optional    |                | Width of the file if needs resizing         |
+ file             |   Object    |    Required    |                | Details of the file which is being uploaded |
+ serviceType      |   String    |    Optional    |      AWS       | Specify the cloud provider Azure/Aws        |
+ config           |   Object    |    Required    |                | Configuration details for s3/Azure          |
+ options          |   Object    |    Optional    |                | Resizing or thumbnail creation inputs       |
 
 
 ### File Specific Parameters:
@@ -50,7 +53,7 @@ with yarn package manager
  size            |   Number    |    Required    |     Size of the file                              |
 
 
-### Cloud Service Specific Parameters:
+### Config Specific Parameters:
 
 | Key             | Type   |                   |             Description
 |-----------------|--------|-------------------|--------------------------------------------------------|
@@ -59,49 +62,82 @@ secretKey         | String |    Required       | secretAccessKey of the s3 or ac
 storageLocation   | String |    Required       | bucketName of the s3 or containerName of azure blob    |
 
 
+### Options Specific Parameters:
+
+| Key             |   Type      |                |                      Description                      |       
+------------------|-------------|----------------|-------------------------------------------------------|
+ resize           |   Object    |    Optional    |   Width and height details of the file to resize      |
+ thumbnail        |   Object    |    Optional    |   Details needed for creating and uploading file      |
+ 
+
+### Resize Specific Parameters:
+
+| Key        |   Type      |                |              Description                        |       
+-------------|-------------|----------------|-------------------------------------------------|
+ width       |   number    |    Required    |   Width  of the file to be resized              |
+ height      |   number    |    Required    |   Height  of the file to be resized             |
+ 
+
+### Thumbnail Specific Parameters:
+
+| Key               |   Type      |                |                      Description                   |       
+--------------------|-------------|----------------|----------------------------------------------------|
+ thumbnailSize      |   number[]  |    Required    |   Sizes of the files to create thumbnails          |
+ thumbnailFolder    |   string    |    Required    |   Folder name where thumbnails are stored          |
+ 
+
 
 ## Example
 ### All Parameters
 The following example demonstrates uploading a file to Azure Blob with all the parameters including optional params.
- 
-`const FileUploader = require('cloud-file-uploader')  `  
-`const fileUploaderClient = new FileUploader();  `  
-`fileUploaderClient.uploadFileToCloud({  `  
+
+`const AzureUploader = require('cloud-file-uploader')  `  
+`const azureUploadFunction = new AzureUploader({  `   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`},  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`thumbnailSize : [400, 600],  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`width : 200,  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cloudConfig : {  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  ` 
-`})  `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`options : {   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`thumbnail : {   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`thumbnailSize : [400, 600],   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`thumbnailFolder : 'testFolder,  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`resize : {  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`width : 200,  `     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : {  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId : 'account key' `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey : 'secret key' `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation : 'location of the bucket' `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `    
+`})  `   
+`const uploadStrategy = new UploadStrategy(azureUploadFunction)  `     
+`const result = uploadStrategy.uploadToCloud()  `   
 
 ### Without Optional Parameters
 The following example demonstrates  uploading a file to Amazon S3 with only the required parameters.
  
-`const FileUploader = require('cloud-file-uploader')  `  
-`const fileUploaderClient = new FileUploader();  `  
-`fileUploaderClient.uploadFileToCloud({  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`originalname: 'aws_file',  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    `}  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cloudConfig : {  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation  ` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `  
-`})  `  
+`const AWSUploader = require('cloud-file-uploader')  `  
+`const awsUploadFunction = new AWSUploader({  `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `     
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `     
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `     
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `     
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`},  `      
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : {  `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId : 'account key'`    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey : 'secret key' `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation :'location of the bucket' `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `    
+`})  `     
+`const uploadStrategy = new UploadStrategy(awsUploadFunction)  `     
+`const result = uploadStrategy.uploadToCloud()  `   
 
 
 Here, thumbnailSize, width, height and serviceType are optional parameters. As for serviceType by default  

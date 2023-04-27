@@ -35,12 +35,12 @@ export const createThumbnail = async (
     fileName: String,
     serviceType: string
 ): Promise<String> => {
-    let thumbnailSize = options?.thumbnailSize ? options?.thumbnailSize : []
+    let thumbnailSize = options?.thumbnail?.thumbnailSize ? options?.thumbnail?.thumbnailSize : []
     let thumbnailFilePath = await Promise.all(
         thumbnailSize.map(async (size) => {
             const thumbnail = await sharp(file.buffer).resize(size).toBuffer();
-            const thumbnailKey = options.thumbnailFolder
-                ? `${options.thumbnailFolder}/${size}-${fileName}`
+            const thumbnailKey = options.thumbnail?.thumbnailFolder
+                ? `${options.thumbnail?.thumbnailFolder}/${size}-${fileName}`
                 : `uploads/${size}-${fileName}`;
             let uploadedPath = serviceType === 'AWS' ?
                 await uploadToS3(thumbnail,
