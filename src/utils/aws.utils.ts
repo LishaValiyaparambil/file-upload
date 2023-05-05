@@ -4,18 +4,14 @@ export const uploadToS3 = async (
   file: Buffer,
   key: string,
   contentType: string,
-  config: IServiceConfigData
+  config: any,
+  storageLocation : string
 ): Promise<string> => {
   try {
-    // Initializing the Amazon s3 variable
-    const s3 = new S3({
-      accessKeyId: config.KeyId,
-      secretAccessKey: config.secretKey,
-    });
     // Uploading file to the s3 bucket
-    const result = await s3
+    const result = await config
       .upload({
-        Bucket: `${config.storageLocation}`,
+        Bucket: `${storageLocation}`,
         Key: key,
         Body: file,
         ContentType: contentType,
@@ -28,4 +24,8 @@ export const uploadToS3 = async (
     throw error
   }
 };
+
+
+
+
 

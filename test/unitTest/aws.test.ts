@@ -1,9 +1,15 @@
 import 'jest';
-import { AWSUploader, UploadStrategy, AzureUploader } from '../../src/controllers/file.controller'
+import { AWSUploader, UploadStrategy, AzureUploader, AwsCloudConfig, CloudConfigStrategy, AzureCloudConfig } from '../../src/controllers/file.controller'
 
 describe('FileUploader', () => {
 
     it('file upload to aws s3 bucket without resize and thumbnail', async () => {
+        const awsS3Config = new AwsCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key',
+        })
+        const configurationResult = new CloudConfigStrategy(awsS3Config)
+        const configDeclaration = configurationResult.cloudConfigMethod()
         const awsUploadFunction = new AWSUploader({
             file: {
                 originalName: 'string',
@@ -11,11 +17,8 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23,
             },
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            }
+            config: configDeclaration,
+            storageLocation: 'bucket name'
         })
         const uploadStrategy = new UploadStrategy(awsUploadFunction)
         const result = uploadStrategy.uploadToCloud()
@@ -26,6 +29,12 @@ describe('FileUploader', () => {
         );
     });
     it('file upload to aws s3 bucket with resize', async () => {
+        const awsS3Config = new AwsCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key'
+        })
+        const configurationResult = new CloudConfigStrategy(awsS3Config)
+        const configDeclaration = configurationResult.cloudConfigMethod()
         const awsUploadFunction = new AWSUploader({
             file: {
                 originalName: 'string',
@@ -33,11 +42,8 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23,
             },
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            },
+            config: configDeclaration,
+            storageLocation: 'bucket name',
             options: {
                 resize: {
                     width: 23,
@@ -45,6 +51,7 @@ describe('FileUploader', () => {
                 }
             }
         })
+
         const uploadStrategy = new UploadStrategy(awsUploadFunction)
         const result = uploadStrategy.uploadToCloud()
         expect(result).toStrictEqual(
@@ -54,6 +61,12 @@ describe('FileUploader', () => {
         );
     });
     it('file upload to aws s3 bucket with thumbnails', async () => {
+        const awsS3Config = new AwsCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key'
+        })
+        const configurationResult = new CloudConfigStrategy(awsS3Config)
+        const configDeclaration = configurationResult.cloudConfigMethod()
         const awsUploadFunction = new AWSUploader({
             file: {
                 originalName: 'string',
@@ -61,18 +74,16 @@ describe('FileUploader', () => {
                 buffer: new Buffer('test'),
                 size: 23,
             },
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            },
+            config: configDeclaration,
+            storageLocation: 'bucket name',
             options: {
-                thumbnail :{
+                thumbnail: {
                     thumbnailSize: [200, 400],
-                    thumbnailFolder : 'thumbFolder'
+                    thumbnailFolder: 'thumbFolder'
                 }
             }
         })
+
         const uploadStrategy = new UploadStrategy(awsUploadFunction)
         const result = uploadStrategy.uploadToCloud()
         expect(result).toStrictEqual(
@@ -84,20 +95,23 @@ describe('FileUploader', () => {
     });
 
     it('file upload to azure blob without resize and thumbnail', async () => {
+        const azureBlobConfig = new AzureCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key',
+        })
+        const configurationResult = new CloudConfigStrategy(azureBlobConfig)
+        const configDeclaration = configurationResult.cloudConfigMethod()
 
         const azureUploadFunction = new AzureUploader({
             file: {
                 originalName: 'string',
                 mimeType: 'image',
                 buffer: new Buffer('test'),
-                size: 23,
+                size: 23
             },
+            storageLocation: 'container name',
+            config: configDeclaration,
             serviceType: 'AZURE',
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            },
         })
         const uploadStrategy = new UploadStrategy(azureUploadFunction)
         const result = uploadStrategy.uploadToCloud()
@@ -108,20 +122,23 @@ describe('FileUploader', () => {
         );
     });
     it('file upload to azure blob with resize', async () => {
+        const azureBlobConfig = new AzureCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key',
+        })
+        const configurationResult = new CloudConfigStrategy(azureBlobConfig)
+        const configDeclaration = configurationResult.cloudConfigMethod()
 
         const azureUploadFunction = new AzureUploader({
             file: {
                 originalName: 'string',
                 mimeType: 'image',
                 buffer: new Buffer('test'),
-                size: 23,
+                size: 23
             },
+            storageLocation: 'container name',
+            config: configDeclaration,
             serviceType: 'AZURE',
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            },
             options: {
                 resize: {
                     width: 23,
@@ -138,25 +155,29 @@ describe('FileUploader', () => {
         );
     });
     it('file upload to azure blob with thumbnails', async () => {
+        const azureBlobConfig = new AzureCloudConfig({
+            KeyId: 'account key',
+            secretKey: 'secret key',
+        })
+        const configurationResult = new CloudConfigStrategy(azureBlobConfig)
+        const configDeclaration = configurationResult.cloudConfigMethod()
+
         const azureUploadFunction = new AzureUploader({
             file: {
                 originalName: 'string',
                 mimeType: 'image',
                 buffer: new Buffer('test'),
-                size: 23,
+                size: 23
             },
+            storageLocation: 'container name',
+            config: configDeclaration,
             serviceType: 'AZURE',
-            config: {
-                KeyId: 'account key',
-                secretKey: 'secret key',
-                storageLocation: 'location of the bucket'
-            },
             options: {
-                thumbnail :{
+                thumbnail: {
                     thumbnailSize: [200, 400],
-                    thumbnailFolder : 'thumbFolder'
+                    thumbnailFolder: 'thumbFolder'
                 }
-                
+
             }
         })
         const uploadStrategy = new UploadStrategy(azureUploadFunction)

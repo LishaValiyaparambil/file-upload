@@ -36,45 +36,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Azure = require("azure-storage");
 var azure_utils_1 = require("../utils/azure.utils");
 var helper_1 = require("../helper/helper");
 var AzureService = /** @class */ (function () {
     function AzureService() {
     }
     AzureService.prototype.azureUploadFunction = function (iFileUploadData) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var fileName, filePathList, resizedFlePath, _d, thumbnailBlobPath, _e;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var fileName, filePathList, resizedFlePath, _e, thumbnailBlobPath, _f;
+            return __generator(this, function (_g) {
+                switch (_g.label) {
                     case 0:
                         fileName = "".concat(Date.now(), "-").concat(iFileUploadData.file.originalName);
                         filePathList = {};
                         if (!((_b = (_a = iFileUploadData.options) === null || _a === void 0 ? void 0 : _a.resize) === null || _b === void 0 ? void 0 : _b.height)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, (0, helper_1.resizeFile)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AZURE')];
+                        return [4 /*yield*/, (0, helper_1.resizeFile)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AZURE', iFileUploadData.storageLocation)];
                     case 1:
-                        _d = _f.sent();
+                        _e = _g.sent();
                         return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(iFileUploadData.file.buffer, "uploads/".concat(fileName), iFileUploadData.file.size, iFileUploadData.config)];
+                    case 2: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(iFileUploadData.file.buffer, "uploads/".concat(fileName), iFileUploadData.file.size, iFileUploadData.config, iFileUploadData.storageLocation)];
                     case 3:
-                        _d = _f.sent();
-                        _f.label = 4;
+                        _e = _g.sent();
+                        _g.label = 4;
                     case 4:
-                        resizedFlePath = _d;
-                        if (!((_c = iFileUploadData.options) === null || _c === void 0 ? void 0 : _c.thumbnailSize)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, (0, helper_1.createThumbnail)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AZURE')];
+                        resizedFlePath = _e;
+                        if (!((_d = (_c = iFileUploadData.options) === null || _c === void 0 ? void 0 : _c.thumbnail) === null || _d === void 0 ? void 0 : _d.thumbnailSize)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, (0, helper_1.createThumbnail)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AZURE', iFileUploadData.storageLocation)];
                     case 5:
-                        _e = _f.sent();
+                        _f = _g.sent();
                         return [3 /*break*/, 7];
                     case 6:
-                        _e = [];
-                        _f.label = 7;
+                        _f = [];
+                        _g.label = 7;
                     case 7:
-                        thumbnailBlobPath = _e;
+                        thumbnailBlobPath = _f;
                         filePathList.flePath = resizedFlePath;
                         filePathList.thumbnailFilePath = thumbnailBlobPath;
                         return [2 /*return*/, filePathList];
                 }
+            });
+        });
+    };
+    AzureService.prototype.initializeBlob = function (iFileUploadData) {
+        return __awaiter(this, void 0, void 0, function () {
+            var blobService;
+            return __generator(this, function (_a) {
+                try {
+                    blobService = Azure.createBlobService(iFileUploadData.KeyId, iFileUploadData.secretKey);
+                    return [2 /*return*/, blobService];
+                }
+                catch (error) {
+                    throw error;
+                }
+                return [2 /*return*/];
             });
         });
     };

@@ -40,7 +40,7 @@ exports.createThumbnail = exports.resizeFile = void 0;
 var sharp = require("sharp");
 var aws_utils_1 = require("../utils/aws.utils");
 var azure_utils_1 = require("../utils/azure.utils");
-var resizeFile = function (file, options, config, fileName, serviceType) { return __awaiter(void 0, void 0, void 0, function () {
+var resizeFile = function (file, options, config, fileName, serviceType, storageLocation) { return __awaiter(void 0, void 0, void 0, function () {
     var resizedFile, uploadedPath, _a;
     var _b, _c;
     return __generator(this, function (_d) {
@@ -51,11 +51,11 @@ var resizeFile = function (file, options, config, fileName, serviceType) { retur
             case 1:
                 resizedFile = _d.sent();
                 if (!(serviceType === 'AWS')) return [3 /*break*/, 3];
-                return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(resizedFile, "uploads/".concat(fileName), file.mimeType, config)];
+                return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(resizedFile, "uploads/".concat(fileName), file.mimeType, config, storageLocation)];
             case 2:
                 _a = _d.sent();
                 return [3 /*break*/, 5];
-            case 3: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(resizedFile, "uploads/".concat(fileName), file.size, config)];
+            case 3: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(resizedFile, "uploads/".concat(fileName), file.size, config, storageLocation)];
             case 4:
                 _a = _d.sent();
                 _d.label = 5;
@@ -66,31 +66,33 @@ var resizeFile = function (file, options, config, fileName, serviceType) { retur
     });
 }); };
 exports.resizeFile = resizeFile;
-var createThumbnail = function (file, options, config, fileName, serviceType) { return __awaiter(void 0, void 0, void 0, function () {
+var createThumbnail = function (file, options, config, fileName, serviceType, storageLocation) { return __awaiter(void 0, void 0, void 0, function () {
     var thumbnailSize, thumbnailFilePath;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
-                thumbnailSize = (options === null || options === void 0 ? void 0 : options.thumbnailSize) ? options === null || options === void 0 ? void 0 : options.thumbnailSize : [];
+                thumbnailSize = ((_a = options === null || options === void 0 ? void 0 : options.thumbnail) === null || _a === void 0 ? void 0 : _a.thumbnailSize) ? (_b = options === null || options === void 0 ? void 0 : options.thumbnail) === null || _b === void 0 ? void 0 : _b.thumbnailSize : [];
                 return [4 /*yield*/, Promise.all(thumbnailSize.map(function (size) { return __awaiter(void 0, void 0, void 0, function () {
                         var thumbnail, thumbnailKey, uploadedPath, _a;
-                        return __generator(this, function (_b) {
-                            switch (_b.label) {
+                        var _b, _c;
+                        return __generator(this, function (_d) {
+                            switch (_d.label) {
                                 case 0: return [4 /*yield*/, sharp(file.buffer).resize(size).toBuffer()];
                                 case 1:
-                                    thumbnail = _b.sent();
-                                    thumbnailKey = options.thumbnailFolder
-                                        ? "".concat(options.thumbnailFolder, "/").concat(size, "-").concat(fileName)
+                                    thumbnail = _d.sent();
+                                    thumbnailKey = ((_b = options.thumbnail) === null || _b === void 0 ? void 0 : _b.thumbnailFolder)
+                                        ? "".concat((_c = options.thumbnail) === null || _c === void 0 ? void 0 : _c.thumbnailFolder, "/").concat(size, "-").concat(fileName)
                                         : "uploads/".concat(size, "-").concat(fileName);
                                     if (!(serviceType === 'AWS')) return [3 /*break*/, 3];
-                                    return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(thumbnail, thumbnailKey, file.mimeType, config)];
+                                    return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(thumbnail, thumbnailKey, file.mimeType, config, storageLocation)];
                                 case 2:
-                                    _a = _b.sent();
+                                    _a = _d.sent();
                                     return [3 /*break*/, 5];
-                                case 3: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(thumbnail, thumbnailKey, file.size, config)];
+                                case 3: return [4 /*yield*/, (0, azure_utils_1.uploadToBlob)(thumbnail, thumbnailKey, file.size, config, storageLocation)];
                                 case 4:
-                                    _a = _b.sent();
-                                    _b.label = 5;
+                                    _a = _d.sent();
+                                    _d.label = 5;
                                 case 5:
                                     uploadedPath = _a;
                                     return [2 /*return*/, uploadedPath];
@@ -98,7 +100,7 @@ var createThumbnail = function (file, options, config, fileName, serviceType) { 
                         });
                     }); }))];
             case 1:
-                thumbnailFilePath = _a.sent();
+                thumbnailFilePath = _c.sent();
                 return [2 /*return*/, "".concat(thumbnailFilePath)];
         }
     });

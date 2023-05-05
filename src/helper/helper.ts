@@ -6,9 +6,10 @@ import { uploadToBlob } from '../utils/azure.utils';
 export const resizeFile = async (
     file: IUploadedFile,
     options: IUploadOptions,
-    config: IServiceConfigData,
+    config: any,
     fileName: string,
-    serviceType: string
+    serviceType: string,
+    storageLocation : string,
 ): Promise<string> => {
 
     const resizedFile = await sharp(file.buffer)
@@ -18,11 +19,13 @@ export const resizeFile = async (
         await uploadToS3(resizedFile,
             `uploads/${fileName}`,
             file.mimeType,
-            config) :
+            config,
+            storageLocation) :
         await uploadToBlob(resizedFile,
             `uploads/${fileName}`,
             file.size,
-            config,)
+            config,
+            storageLocation)
     return uploadedPath
 
 }
@@ -31,9 +34,10 @@ export const resizeFile = async (
 export const createThumbnail = async (
     file: IUploadedFile,
     options: IUploadOptions,
-    config: IServiceConfigData,
+    config: object,
     fileName: String,
-    serviceType: string
+    serviceType: string,
+    storageLocation : string
 ): Promise<String> => {
     let thumbnailSize = options?.thumbnail?.thumbnailSize ? options?.thumbnail?.thumbnailSize : []
     let thumbnailFilePath = await Promise.all(
@@ -46,11 +50,13 @@ export const createThumbnail = async (
                 await uploadToS3(thumbnail,
                     thumbnailKey,
                     file.mimeType,
-                    config) :
+                    config,
+                    storageLocation) :
                 await uploadToBlob(thumbnail,
                     thumbnailKey,
                     file.size,
-                    config,)
+                    config,
+                    storageLocation)
             return uploadedPath
         })
     );

@@ -11,7 +11,7 @@ export interface IUploadInputData {
   height?: number;
   thumbnailSize?: number[];
   serviceType?: string;
-  cloudConfig: IServiceConfigData;
+  cloudConfig: string;
 }
 
 export interface IUploadOptions {
@@ -33,13 +33,15 @@ export interface IResultData {
 export interface IServiceConfigData {
     KeyId: string;
     secretKey: string;
-    storageLocation: string;
+    // storageLocation: string;
 }
 
 export interface IFileUploadData {
     file: IUploadedFile,
-    config: IServiceConfigData,
+    config: object,
+    storageLocation : string,
     options?: IUploadOptions,
     serviceType? : string
 }
+
 

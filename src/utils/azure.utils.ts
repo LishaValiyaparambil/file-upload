@@ -6,23 +6,19 @@ export const uploadToBlob = async (
   file: Buffer,
   key: string,
   contentType: number,
-  config: IServiceConfigData
+  config: any,
+  storageLocation : string
 ): Promise<string> => {
   try {
-    // Initializing the Azure Blob variable
-    const blobService = Azure.createBlobService(
-      config.KeyId,
-      config.secretKey
-    );
     // Uploading file to the Azure blob    accountName? : string;
     const result = await new Promise<void>((resolve, reject) => {
-      blobService.createBlockBlobFromStream(
-       config.storageLocation,
+      config.createBlockBlobFromStream(
+        storageLocation,
         key,
         Readable.from(file),
         contentType,
         {},
-        (error) => {
+        (error: any) => {
           if (error) {
             reject(error);
           } else {
@@ -31,12 +27,16 @@ export const uploadToBlob = async (
         },
       );
     });
-    const fileUrl = `https://${process.env.accountName}.blob.core.windows.net/${process.env.containerName}/${key}`
-    return fileUrl;
+    return('true')
+    
   }
   catch (error) {
     throw error
   }
 };
+
+
+
+
 
 

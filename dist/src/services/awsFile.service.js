@@ -36,45 +36,64 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var aws_sdk_1 = require("aws-sdk");
 var aws_utils_1 = require("../utils/aws.utils");
 var helper_1 = require("../helper/helper");
 var AWSService = /** @class */ (function () {
     function AWSService() {
     }
     AWSService.prototype.s3UploadFunction = function (iFileUploadData) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var fileName, filePathList, resizedFleS3Path, _d, thumbnailPath, _e;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var fileName, filePathList, resizedFleS3Path, _e, thumbnailPath, _f;
+            return __generator(this, function (_g) {
+                switch (_g.label) {
                     case 0:
                         fileName = "".concat(Date.now(), "-").concat(iFileUploadData.file.originalName);
                         filePathList = {};
                         if (!((_b = (_a = iFileUploadData.options) === null || _a === void 0 ? void 0 : _a.resize) === null || _b === void 0 ? void 0 : _b.height)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, (0, helper_1.resizeFile)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AWS')];
+                        return [4 /*yield*/, (0, helper_1.resizeFile)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AWS', iFileUploadData.storageLocation)];
                     case 1:
-                        _d = _f.sent();
+                        _e = _g.sent();
                         return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(iFileUploadData.file.buffer, "uploads/".concat(fileName), iFileUploadData.file.mimeType, iFileUploadData.config)];
+                    case 2: return [4 /*yield*/, (0, aws_utils_1.uploadToS3)(iFileUploadData.file.buffer, "uploads/".concat(fileName), iFileUploadData.file.mimeType, iFileUploadData.config, iFileUploadData.storageLocation)];
                     case 3:
-                        _d = _f.sent();
-                        _f.label = 4;
+                        _e = _g.sent();
+                        _g.label = 4;
                     case 4:
-                        resizedFleS3Path = _d;
-                        if (!((_c = iFileUploadData.options) === null || _c === void 0 ? void 0 : _c.thumbnailSize)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, (0, helper_1.createThumbnail)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AWS')];
+                        resizedFleS3Path = _e;
+                        if (!((_d = (_c = iFileUploadData.options) === null || _c === void 0 ? void 0 : _c.thumbnail) === null || _d === void 0 ? void 0 : _d.thumbnailSize)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, (0, helper_1.createThumbnail)(iFileUploadData.file, iFileUploadData.options, iFileUploadData.config, fileName, 'AWS', iFileUploadData.storageLocation)];
                     case 5:
-                        _e = _f.sent();
+                        _f = _g.sent();
                         return [3 /*break*/, 7];
                     case 6:
-                        _e = [];
-                        _f.label = 7;
+                        _f = [];
+                        _g.label = 7;
                     case 7:
-                        thumbnailPath = _e;
+                        thumbnailPath = _f;
                         filePathList.flePath = resizedFleS3Path;
                         filePathList.thumbnailFilePath = thumbnailPath;
                         return [2 /*return*/, filePathList];
                 }
+            });
+        });
+    };
+    AWSService.prototype.initializeS3 = function (iFileUploadData) {
+        return __awaiter(this, void 0, void 0, function () {
+            var s3;
+            return __generator(this, function (_a) {
+                try {
+                    s3 = new aws_sdk_1.S3({
+                        accessKeyId: iFileUploadData.KeyId,
+                        secretAccessKey: iFileUploadData.secretKey,
+                    });
+                    return [2 /*return*/, s3];
+                }
+                catch (error) {
+                    throw error;
+                }
+                return [2 /*return*/];
             });
         });
     };

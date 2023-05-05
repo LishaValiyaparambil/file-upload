@@ -37,17 +37,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadToBlob = void 0;
-var Azure = require("azure-storage");
 var Readable = require('stream').Readable;
-var uploadToBlob = function (file, key, contentType, config) { return __awaiter(void 0, void 0, void 0, function () {
-    var blobService_1, result, fileUrl, error_1;
+var uploadToBlob = function (file, key, contentType, config, storageLocation) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                blobService_1 = Azure.createBlobService(config.KeyId, config.secretKey);
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
-                        blobService_1.createBlockBlobFromStream(config.storageLocation, key, Readable.from(file), contentType, {}, function (error) {
+                        config.createBlockBlobFromStream(storageLocation, key, Readable.from(file), contentType, {}, function (error) {
                             if (error) {
                                 reject(error);
                             }
@@ -58,8 +56,7 @@ var uploadToBlob = function (file, key, contentType, config) { return __awaiter(
                     })];
             case 1:
                 result = _a.sent();
-                fileUrl = "https://".concat(process.env.accountName, ".blob.core.windows.net/").concat(process.env.containerName, "/").concat(key);
-                return [2 /*return*/, fileUrl];
+                return [2 /*return*/, ('true')];
             case 2:
                 error_1 = _a.sent();
                 throw error_1;

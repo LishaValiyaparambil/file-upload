@@ -35,13 +35,12 @@ with yarn package manager
 
 ### Common Parameters:
 
-| Key             |   Type      |                |      Default   |               Description                   |       
-------------------|-------------|----------------|----------------|---------------------------------------------|
- file             |   Object    |    Required    |                | Details of the file which is being uploaded |
- serviceType      |   String    |    Optional    |      AWS       | Specify the cloud provider Azure/Aws        |
- config           |   Object    |    Required    |                | Configuration details for s3/Azure          |
- options          |   Object    |    Optional    |                | Resizing or thumbnail creation inputs       |
-
+| Key             |   Type      |                |  Default  |               Description                           |       
+------------------|-------------|----------------|-----------|-----------------------------------------------------|
+ file             |   Object    |    Required    |           | Details of the file which is being uploaded         |
+ serviceType      |   String    |    Optional    |    AWS    | Specify the cloud provider Azure/Aws                |
+ options          |   Object    |    Optional    |           | Resizing or thumbnail creation inputs               |
+ storageLocation  | String      |    Required    |           | bucketName of the s3 or containerName of azure blob |
 
 ### File Specific Parameters:
 
@@ -59,7 +58,7 @@ with yarn package manager
 |-----------------|--------|-------------------|--------------------------------------------------------|
 KeyId             | String |    Required       | accessKeyId of the s3 or accountName of azure blob     |
 secretKey         | String |    Required       | secretAccessKey of the s3 or accountKey of azure blob  |
-storageLocation   | String |    Required       | bucketName of the s3 or containerName of azure blob    |
+
 
 
 ### Options Specific Parameters:
@@ -92,6 +91,12 @@ storageLocation   | String |    Required       | bucketName of the s3 or contain
 The following example demonstrates uploading a file to Azure Blob with all the parameters including optional params.
 
 `const AzureUploader = require('cloud-file-uploader')  `  
+`const azureBlobConfig = new AzureCloudConfig({   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId: 'account key',   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey: 'secret key',   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`})   `   
+`const configurationResult = new CloudConfigStrategy(azureBlobConfig)   `   
+`const configDeclaration = configurationResult.cloudConfigMethod()   `   
 `const azureUploadFunction = new AzureUploader({  `   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `  
@@ -109,12 +114,9 @@ The following example demonstrates uploading a file to Azure Blob with all the p
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`height : 400  `    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `     
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : {  `   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId : 'account key' `   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey : 'secret key' `    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation : 'location of the bucket' `    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceType: 'AZURE'  `       
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : configDeclaration `  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation : 'location of the bucket' `    
 `})  `   
 `const uploadStrategy = new UploadStrategy(azureUploadFunction)  `     
 `const result = uploadStrategy.uploadToCloud()  `   
@@ -122,19 +124,23 @@ The following example demonstrates uploading a file to Azure Blob with all the p
 ### Without Optional Parameters
 The following example demonstrates  uploading a file to Amazon S3 with only the required parameters.
  
-`const AWSUploader = require('cloud-file-uploader')  `  
+`const awsS3Config = require('cloud-file-uploader')  `  
+`const awsS3Config = new AwsCloudConfig({   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId: 'account key',   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey: 'secret key',   `   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`})   `   
+`const configurationResult = new CloudConfigStrategy(awsS3Config)   `   
+`const configDeclaration = configurationResult.cloudConfigMethod()   `
 `const awsUploadFunction = new AWSUploader({  `   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`file: {  `     
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` originalname: 'aws_file',  `     
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`mimetype: 'image',  `     
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`buffer: wqeqwewqeqewe,  `     
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`size: 12  `     
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`},  `      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : {  `    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`KeyId : 'account key'`    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`secretKey : 'secret key' `    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation :'location of the bucket' `    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`}  `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`},  `        
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`config : 'secret key' `    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`storageLocation :'location of the bucket' `    
+ 
 `})  `     
 `const uploadStrategy = new UploadStrategy(awsUploadFunction)  `     
 `const result = uploadStrategy.uploadToCloud()  `   

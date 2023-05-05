@@ -37,20 +37,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadToS3 = void 0;
-var aws_sdk_1 = require("aws-sdk");
-var uploadToS3 = function (file, key, contentType, config) { return __awaiter(void 0, void 0, void 0, function () {
-    var s3, result, error_1;
+var uploadToS3 = function (file, key, contentType, config, storageLocation) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                s3 = new aws_sdk_1.S3({
-                    accessKeyId: config.KeyId,
-                    secretAccessKey: config.secretKey,
-                });
-                return [4 /*yield*/, s3
+                return [4 /*yield*/, config
                         .upload({
-                        Bucket: "".concat(config.storageLocation),
+                        Bucket: "".concat(storageLocation),
                         Key: key,
                         Body: file,
                         ContentType: contentType,

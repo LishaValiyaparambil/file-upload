@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AWSService = exports.AzureUploader = exports.AWSUploader = exports.UploadStrategy = void 0;
+exports.AWSService = exports.AwsCloudConfig = exports.AzureCloudConfig = exports.CloudConfigStrategy = exports.AzureUploader = exports.AWSUploader = exports.UploadStrategy = void 0;
 var services_1 = require("../services");
 Object.defineProperty(exports, "AWSService", { enumerable: true, get: function () { return services_1.AWSService; } });
 var UploadStrategy = /** @class */ (function () {
@@ -95,3 +95,59 @@ var AzureUploader = /** @class */ (function () {
     return AzureUploader;
 }());
 exports.AzureUploader = AzureUploader;
+var CloudConfigStrategy = /** @class */ (function () {
+    function CloudConfigStrategy(strategy) {
+        this.strategy = strategy;
+    }
+    CloudConfigStrategy.prototype.cloudConfigMethod = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.strategy.cloudConfigMethod()];
+            });
+        });
+    };
+    return CloudConfigStrategy;
+}());
+exports.CloudConfigStrategy = CloudConfigStrategy;
+var AzureCloudConfig = /** @class */ (function () {
+    function AzureCloudConfig(uploadObject) {
+        this.azureObject = new services_1.AzureService();
+        this.uploadObject = uploadObject;
+    }
+    AzureCloudConfig.prototype.cloudConfigMethod = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.azureObject.initializeBlob(this.uploadObject)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                }
+            });
+        });
+    };
+    return AzureCloudConfig;
+}());
+exports.AzureCloudConfig = AzureCloudConfig;
+var AwsCloudConfig = /** @class */ (function () {
+    function AwsCloudConfig(uploadObject) {
+        this.azureObject = new services_1.AWSService();
+        this.uploadObject = uploadObject;
+    }
+    AwsCloudConfig.prototype.cloudConfigMethod = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.azureObject.initializeS3(this.uploadObject)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                }
+            });
+        });
+    };
+    return AwsCloudConfig;
+}());
+exports.AwsCloudConfig = AwsCloudConfig;
